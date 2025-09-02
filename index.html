@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NIGERIA GRASSROOTS FOOTBALL COMPETITIONS</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-blue: #00308F;
+      --secondary-blue: #0078D7;
+      --accent-green: #008000;
+      --accent-yellow: #FFD700;
+      --light-bg: #f0f8ff;
+      --dark-text: #222222;
+      --light-text: #ffffff;
+      --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--dark-text);
+      line-height: 1.6;
+      background-color: #f9f9f9;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    /* Header styling */
+    header {
+      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+      color: var(--light-text);
+      padding: 25px 0;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 10;
+    }
+
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 15px;
+    }
+
+    .logo {
+      width: 90px;
+      height: 90px;
+      background-color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 16px;
+      color: var(--primary-blue);
+      border: 3px solid var(--accent-yellow);
+      box-shadow: var(--card-shadow);
+      transition: var(--transition);
+    }
+
+    .logo:hover {
+      transform: rotate(10deg);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      font-weight: 700;
+    }
+
+    .subtitle {
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      font-weight: 500;
+    }
+
+    /* Navigation */
+    nav {
+      background-color: var(--accent-green);
+      padding: 12px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    nav li {
+      margin: 0 10px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 30px;
+      transition: var(--transition);
+      display: inline-block;
+    }
+
+    nav a:hover {
+      background-color: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Main content */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+
+    /* Form styling */
+    .form-section {
+      background: white;
+      padding: 35px;
+      border-radius: 15px;
+      box-shadow: var(--card-shadow);
+      grid-column: 1 / -1;
+      transition: var(--transition);
+    }
+
+    .form-section:hover {
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .form-title {
+      color: var(--primary-blue);
+      margin-bottom: 25px;
+      text-align: center;
+      font-size: 2rem;
+      position: relative;
+      padding-bottom: 15px;
+    }
+
+    .form-title:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: var(--accent-yellow);
+      border-radius: 2px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: var(--primary-blue);
+      font-size: 16px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 14px 18px;
+      border: 2px solid #e1e5eb;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: var(--transition);
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--secondary-blue);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0,120,215,0.2);
+    }
+
+    button {
+      background: linear-gradient(to right, var(--accent-green), #00a000);
+      color: white;
+      border: none;
+      padding: 16px 30px;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      margin-top: 20px;
+      width: 100%;
+      transition: var(--transition);
+      border: 2px solid var(--accent-yellow);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 14px rgba(0,0,0,0.2);
+    }
+
+    /* Section styling */
+    .info-section {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: var(--card-shadow);
+      margin-bottom: 40px;
+      transition: var(--transition);
+    }
+
+    .info-section:hover {
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .section-title {
+      color: var(--primary-blue);
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 3px solid var(--accent-yellow);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 1.8rem;
+    }
+
+    .section-title i {
+      color: var(--accent-green);
+      background: var(--light-bg);
+      padding: 12px;
+      border-radius: 50%;
+    }
+
+    .category-list {
+      list-style: none;
+    }
+
+    .category-list li {
+      padding: 12px 0;
+      border-bottom: 1px dashed #eee;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 16px;
+      transition: var(--transition);
+    }
+
+    .category-list li:hover {
+      background-color: var(--light-bg);
+      padding-left: 15px;
+      border-radius: 8px;
+    }
+
+    .category-list li:before {
+      content: "•";
+      color: var(--accent-green);
+      font-weight: bold;
+      font-size: 24px;
+    }
+
+    .club-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .club-card {
+      background: var(--light-bg);
+      padding: 20px;
+      border-radius: 12px;
+      border-left: 5px solid var(--accent-green);
+      transition: var(--transition);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    }
+
+    .club-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+    }
+
+    .club-card h3 {
+      color: var(--primary-blue);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .club-card p {
+      color: #555;
+      font-size: 15px;
+    }
+
+    /* Registered clubs section */
+    .registered-clubs {
+      background: linear-gradient(to bottom, #f7fbff, #e6f2ff);
+      border: 2px dashed var(--secondary-blue);
+    }
+
+    .registered-clubs .section-title {
+      color: var(--secondary-blue);
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+      color: white;
+      text-align: center;
+      padding: 40px 0;
+      margin-top: 60px;
+    }
+
+    .contact-info {
+      max-width: 800px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      padding: 30px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 10px;
+      transition: var(--transition);
+    }
+
+    .contact-item:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px);
+    }
+
+    .copyright {
+      margin-top: 30px;
+      padding-top: 25px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    /* Background pattern */
+    .background-pattern {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        radial-gradient(circle at 5% 10%, rgba(0, 48, 143, 0.03) 0%, transparent 20%),
+        radial-gradient(circle at 95% 10%, rgba(0, 120, 215, 0.03) 0%, transparent 20%),
+        radial-gradient(circle at 50% 90%, rgba(0, 128, 0, 0.03) 0%, transparent 20%);
+      z-index: -1;
+    }
+
+    /* Success message */
+    .success-message {
+      background-color: #d4edda;
+      color: #155724;
+      padding: 18px;
+      border-radius: 8px;
+      margin-top: 25px;
+      display: none;
+      text-align: center;
+      font-weight: 500;
+      border-left: 5px solid #28a745;
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .subtitle {
+        font-size: 1.1rem;
+      }
+
+      nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .container {
+        padding: 20px 15px;
+      }
+
+      .form-section, .info-section {
+        padding: 25px 20px;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background pattern -->
+  <div class="background-pattern"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="logo-container">
+      <div class="logo">NGFC</div>
+      <div class="logo">IDEMILI</div>
+    </div>
+    <h1>NIGERIA GRASSROOTS FOOTBALL COMPETITIONS</h1>
+    <p class="subtitle">The official sports governing body for Idemili North and South regions</p>
+  </header>
+
+  <!-- Navigation -->
+  <nav>
+    <ul>
+      <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="#registration"><i class="fas fa-clipboard-list"></i> Registration</a></li>
+      <li><a href="#about"><i class="fas fa-info-circle"></i> About Us</a></li>
+      <li><a href="#competitions"><i class="fas fa-trophy"></i> Competitions</a></li>
+      <li><a href="#clubs"><i class="fas fa-users"></i> Clubs & Academies</a></li>
+      <li><a href="#registered"><i class="fas fa-futbol"></i> Registered Clubs</a></li>
+      <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Registration Form -->
+    <section id="registration" class="form-section fade-in">
+      <h2 class="form-title">Club Registration Form</h2>
+      <form id="club-registration" action="/" method="POST">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="club-name"><i class="fas fa-signature"></i> Club Name</label>
+            <input type="text" id="club-name" name="clubName" placeholder="Enter your club name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="club-base"><i class="fas fa-map-marker-alt"></i> Club Base/Location</label>
+            <input type="text" id="club-base" name="clubBase" placeholder="Where is your club based?" required>
+          </div>
+
+          <div class="form-group">
+            <label for="club-type"><i class="fas fa-question-circle"></i> Academy or Football Club?</label>
+            <select id="club-type" name="clubType" required>
+              <option value="">Select type</option>
+              <option value="academy">Football Academy</option>
+              <option value="club">Football Club</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="club-director"><i class="fas fa-user-tie"></i> Club Director/Manager</label>
+            <input type="text" id="club-director" name="clubDirector" placeholder="Full name of director" required>
+          </div>
+
+          <div class="form-group">
+            <label for="club-category"><i class="fas fa-layer-group"></i> Club Category</label>
+            <select id="club-category" name="clubCategory" required>
+              <option value="">Select category</option>
+              <option value="u13">U-13</option>
+              <option value="u15">U-15</option>
+              <option value="u17">U-17</option>
+              <option value="senior">Senior</option>
+              <option value="female">Female Team</option>
+              <option value="mixed">Mixed Categories</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="contact-email"><i class="fas fa-envelope"></i> Contact Email</label>
+            <input type="email" id="contact-email" name="contactEmail" placeholder="Email address" required>
+          </div>
+
+          <div class="form-group">
+            <label for="contact-phone"><i class="fas fa-phone"></i> Contact Phone</label>
+            <input type="tel" id="contact-phone" name="contactPhone" placeholder="Phone number" required>
+          </div>
+        </div>
+
+        <button type="submit"><i class="fas fa-paper-plane"></i> Submit Registration</button>
+      </form>
+
+      <div id="success-message" class="success-message">
+        <i class="fas fa-check-circle"></i> Thank you for registering your club! It will now appear in the Registered Clubs section.
+      </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="info-section fade-in">
+      <h2 class="section-title"><i class="fas fa-info-circle"></i> About Us</h2>
+      <p>
+        The Nigeria Grassroots Football Competitions body is dedicated to discovering and promoting football talents
+        across local communities in Idemili North and South. We create competitive platforms that empower young players,
+        clubs, and academies to thrive and gain visibility both locally and nationally.
+      </p>
+      <p>
+        Our mission is to develop football from the grassroots level, providing opportunities for young talents to
+        showcase their skills, and creating pathways to professional football careers.
+      </p>
+    </section>
+
+    <!-- Competition Categories Section -->
+    <section id="competitions" class="info-section fade-in">
+      <h2 class="section-title"><i class="fas fa-trophy"></i> Competition Categories</h2>
+      <ul class="category-list">
+        <li>5-A-Side Football Competition</li>
+        <li>7-A-Side Football Competition</li>
+        <li>U-13 Boys Championship</li>
+        <li>U-15 Boys Championship</li>
+        <li>U-17 Boys Championship</li>
+        <li>U-15 & U-17 Girls League</li>
+        <li>Open-Age Community Clubs League</li>
+        <li>Academy Challenge Cup</li>
+        <li>Inter-LGA Youth Tournament</li>
+        <li>Annual Grassroots Football Festival</li>
+      </ul>
+    </section>
+
+    <!-- Registered Clubs Section -->
+    <section id="registered" class="info-section registered-clubs fade-in">
+      <h2 class="section-title"><i class="fas fa-futbol"></i> Newly Registered Clubs</h2>
+      <p>These clubs have recently joined our competition. Welcome to the NGFC family!</p>
+
+      <div id="new-clubs-container" class="club-list">
+        <!-- Newly registered clubs will appear here -->
+        <div class="club-card">
+          <h3><i class="fas fa-futbol"></i> Your Club Name</h3>
+          <p>Submit the form to see your club listed here!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Football Academies and Clubs Section -->
+    <section id="clubs" class="info-section fade-in">
+      <h2 class="section-title"><i class="fas fa-users"></i> Established Football Academies & Clubs</h2>
+      <p>
+        We partner with several certified academies and clubs across the Idemili region to foster talent and professionalism.
+        Join a growing list of active clubs and academies participating in grassroots development:
+      </p>
+
+      <div class="club-list">
+        <div class="club-card">
+          <h3><i class="fas fa-futbol"></i> Rising Star FC Queens Ojoto</h3>
+          <p>Category: U-15 & U-17 Female</p>
+        </div>
+
+        <div class="club-card">
+          <h3><i class="fas fa-futbol"></i> Rising Star United FC Ojoto</h3>
+          <p>Category: U-13, U-15 & U-17 Male</p>
+        </div>
+
+        <div class="club-card">
+          <h3><i class="fas fa-futbol"></i> Lucky Star Queens FC Nkpor</h3>
+          <p>Category: U-17 Female & Senior Female</p>
+        </div>
+
+        <div class="club-card">
+          <h3><i class="fas fa-futbol"></i> Maureen Madu Academy Ozubulu</h3>
+          <p>Category: U-13, U-15 & U-17 Mixed</p>
+        </div>
+
+        <div class="club-card">
+          <h3><i class="fas fa-futbol"></i> Samba Queens FC Ichida</h3>
+          <p>Category: U-15 & U-17 Female</p>
+        </div>
+
+        <div class="club-card">
+          <h3><i class="fas fa-futbol"></i> Sports Rays Angels FC Nkpor</h3>
+          <p>Category: U-13 & U-15 Female</p>
+        </div>
+
+        <div class="club-card">
+          <h3><i class="fas fa-futbol"></i> Golden Stars Queens FC Ichi</h3>
+          <p>Category: U-17 & Senior Female</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer id="contact">
+    <h2>Contact Us</h2>
+    <div class="contact-info">
+      <div class="contact-item">
+        <i class="fas fa-envelope"></i>
+        <span>info@ngfcidemili.org</span>
+      </div>
+      <div class="contact-item">
+        <i class="fas fa-phone"></i>
+        <span>+234 803 123 4567</span>
+      </div>
+      <div class="contact-item">
+        <i class="fas fa-map-marker-alt"></i>
+        <span>Ojoto, Idemili South, Anambra State</span>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>&copy; 2023 Nigeria Grassroots Football Competitions - Idemili Region. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Load any previously saved clubs from localStorage
+      loadRegisteredClubs();
+
+      // Form submission handling
+      document.getElementById('club-registration').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Get form values
+        const clubName = document.getElementById('club-name').value;
+        const clubBase = document.getElementById('club-base').value;
+        const clubType = document.getElementById('club-type').value;
+        const clubDirector = document.getElementById('club-director').value;
+        const clubCategory = document.getElementById('club-category').value;
+        const contactEmail = document.getElementById('contact-email').value;
+        const contactPhone = document.getElementById('contact-phone').value;
+
+        // Create club object
+        const club = {
+          name: clubName,
+          base: clubBase,
+          type: clubType,
+          director: clubDirector,
+          category: clubCategory,
+          email: contactEmail,
+          phone: contactPhone,
+          timestamp: new Date().toISOString()
+        };
+
+        // Save club to localStorage
+        saveClub(club);
+
+        // Add club to the display
+        addClubToDisplay(club);
+
+        // Show success message
+        const successMessage = document.getElementById('success-message');
+        successMessage.style.display = 'block';
+
+        // Reset form
+        setTimeout(function() {
+          document.getElementById('club-registration').reset();
+          successMessage.style.display = 'none';
+        }, 5000);
+      });
+
+      // Function to save club to localStorage
+      function saveClub(club) {
+        let clubs = JSON.parse(localStorage.getItem('ngfc_clubs')) || [];
+        clubs.push(club);
+        localStorage.setItem('ngfc_clubs', JSON.stringify(clubs));
+      }
+
+      // Function to load registered clubs from localStorage
+      function loadRegisteredClubs() {
+        const clubs = JSON.parse(localStorage.getItem('ngfc_clubs')) || [];
+        const container = document.getElementById('new-clubs-container');
+
+        // Clear the placeholder
+        container.innerHTML = '';
+
+        if (clubs.length === 0) {
+          container.innerHTML = `
+            <div class="club-card">
+              <h3><i class="fas fa-futbol"></i> Your Club Name</h3>
+              <p>Submit the form to see your club listed here!</p>
+            </div>
+          `;
+          return;
+        }
+
+        // Display the clubs (show latest 6)
+        const recentClubs = clubs.slice(-6).reverse();
+        recentClubs.forEach(club => {
+          addClubToDisplay(club, container);
+        });
+      }
+
+      // Function to add a club to the display
+      function addClubToDisplay(club, container = null) {
+        if (!container) {
+          container = document.getElementById('new-clubs-container');
+        }
+
+        const clubCard = document.createElement('div');
+        clubCard.className = 'club-card fade-in';
+        clubCard.innerHTML = `
+          <h3><i class="fas fa-futbol"></i> ${club.name}</h3>
+          <p><strong>Location:</strong> ${club.base}</p>
+          <p><strong>Type:</strong> ${club.type === 'academy' ? 'Football Academy' : 'Football Club'}</p>
+          <p><strong>Category:</strong> ${getCategoryDisplayName(club.category)}</p>
+          <p><strong>Director:</strong> ${club.director}</p>
+        `;
+
+        container.prepend(clubCard);
+      }
+
+      // Helper function to get display name for category
+      function getCategoryDisplayName(category) {
+        const categories = {
+          'u13': 'U-13',
+          'u15': 'U-15',
+          'u17': 'U-17',
+          'senior': 'Senior',
+          'female': 'Female Team',
+          'mixed': 'Mixed Categories'
+        };
+
+        return categories[category] || category;
+      }
+
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('nav a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+
+          const targetId = this.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>
