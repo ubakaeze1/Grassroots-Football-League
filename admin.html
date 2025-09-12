@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NGFC Admin Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fa;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #00308F;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-top: 30px;
+      border-bottom: 2px solid #00308F;
+      padding-bottom: 5px;
+      color: #00308F;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #0078D7;
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 6px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    button:hover { background: #005bb5; }
+
+    /* Previews */
+    .admin-gallery img { width: 120px; border-radius: 8px; margin: 5px; }
+    .admin-partners img { height: 50px; margin: 5px; border-radius: 6px; }
+
+    /* Buttons */
+    .delete-btn {
+      background: crimson; color: #fff; padding: 4px 8px; margin-left: 5px;
+      border-radius: 4px; cursor: pointer; font-size: 12px;
+    }
+    .delete-btn:hover { background: darkred; }
+    .edit-btn {
+      background: #0078D7; color: #fff; padding: 4px 8px; margin-left: 5px;
+      border-radius: 4px; cursor: pointer; font-size: 12px;
+    }
+    .edit-btn:hover { background: #005bb5; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Admin Dashboard - NGFC</h1>
+  </header>
+
+  <div class="container">
+    <!-- Gallery -->
+    <h2><i class="fas fa-images"></i> Manage Gallery</h2>
+    <input type="file" id="gallery-upload" accept="image/*">
+    <div id="gallery-preview" class="admin-gallery"></div>
+
+    <!-- News -->
+    <h2><i class="fas fa-newspaper"></i> Manage News & Updates</h2>
+    <input type="date" id="news-date">
+    <input type="text" id="news-text" placeholder="Enter news update">
+    <input type="file" id="news-image" accept="image/*">
+    <button id="add-news">Add News</button>
+    <div id="news-preview"></div>
+
+    <!-- Partners -->
+    <h2><i class="fas fa-handshake"></i> Manage Partners & Sponsors</h2>
+    <input type="file" id="partner-upload" accept="image/*">
+    <div id="partners-preview" class="admin-partners"></div>
+
+    <!-- Clubs Registry -->
+    <h2><i class="fas fa-futbol"></i> Manage Clubs</h2>
+    <input type="text" id="club-name" placeholder="Enter club name">
+    <input type="file" id="club-logo" accept="image/*">
+    <button id="add-club">Add Club</button>
+    <div id="clubs-preview"></div>
+
+    <!-- Fixtures -->
+    <h2><i class="fas fa-calendar-alt"></i> Manage Fixtures & Results</h2>
+    <label>Tournament / Match Event</label>
+    <input type="text" id="fixture-tournament" placeholder="e.g. U17 Championship">
+
+    <label>Date</label>
+    <input type="date" id="fixture-date">
+
+    <label>Team A</label>
+    <input type="text" id="fixture-teamA" list="clubs-list" placeholder="e.g. Rising Star FC">
+    <input type="file" id="fixture-logoA" accept="image/*">
+
+    <label>Team B</label>
+    <input type="text" id="fixture-teamB" list="clubs-list" placeholder="e.g. Samba Queens FC">
+    <input type="file" id="fixture-logoB" accept="image/*">
+
+    <label>Venue</label>
+    <input type="text" id="fixture-venue" placeholder="e.g. Ojoto Stadium">
+
+    <label>Scoreline (optional)</label>
+    <input type="text" id="fixture-score" placeholder="e.g. 2 - 1">
+
+    <button id="add-fixture">Add Fixture</button>
+    <div id="fixtures-preview"></div>
+
+    <!-- Datalist for auto-suggest -->
+    <datalist id="clubs-list"></datalist>
+  </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // --- helper to update timestamps ---
+  function markUpdated(key) {
+    let last = JSON.parse(localStorage.getItem("ngfc_lastUpdated")) || {};
+    last[key] = Date.now();
+    localStorage.setItem("ngfc_lastUpdated", JSON.stringify(last));
+  }
+
+  // ====== GALLERY ======
+  function loadGallery() {
+    const gallery = JSON.parse(localStorage.getItem("ngfc_gallery")) || [];
+    const container = document.getElementById("gallery-preview");
+    container.innerHTML = "";
+    gallery.forEach((img, i) => {
+      container.innerHTML += `
+        <div style="display:inline-block;text-align:center;">
+          <img src="${img}" alt="gallery" style="max-width:120px;">
+          <br>
+          <button class="edit-btn" onclick="editGallery(${i})">Edit</button>
+          <button class="delete-btn" onclick="deleteGallery(${i})">Delete</button>
+        </div>`;
+    });
+  }
+  document.getElementById("gallery-upload").addEventListener("change", e => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        let gallery = JSON.parse(localStorage.getItem("ngfc_gallery")) || [];
+        const editIndex = localStorage.getItem("edit_gallery_index");
+        if (editIndex !== null) {
+          gallery[editIndex] = reader.result;
+          localStorage.removeItem("edit_gallery_index");
+        } else {
+          gallery.push(reader.result);
+        }
+        localStorage.setItem("ngfc_gallery", JSON.stringify(gallery));
+        markUpdated("gallery");
+        loadGallery();
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+  window.deleteGallery = i => {
+    let gallery = JSON.parse(localStorage.getItem("ngfc_gallery")) || [];
+    gallery.splice(i,1);
+    localStorage.setItem("ngfc_gallery", JSON.stringify(gallery));
+    markUpdated("gallery");
+    loadGallery();
+  };
+  window.editGallery = i => {
+    localStorage.setItem("edit_gallery_index", i);
+    document.getElementById("gallery-upload").click();
+  };
+
+  // ====== PARTNERS ======
+  function loadPartners() {
+    const partners = JSON.parse(localStorage.getItem("ngfc_partners")) || [];
+    const container = document.getElementById("partners-preview");
+    container.innerHTML = "";
+    partners.forEach((img, i) => {
+      container.innerHTML += `
+        <div style="display:inline-block;text-align:center;">
+          <img src="${img}" alt="partner" style="max-height:50px;">
+          <br>
+          <button class="edit-btn" onclick="editPartner(${i})">Edit</button>
+          <button class="delete-btn" onclick="deletePartner(${i})">Delete</button>
+        </div>`;
+    });
+  }
+  document.getElementById("partner-upload").addEventListener("change", e => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        let partners = JSON.parse(localStorage.getItem("ngfc_partners")) || [];
+        const editIndex = localStorage.getItem("edit_partner_index");
+        if (editIndex !== null) {
+          partners[editIndex] = reader.result;
+          localStorage.removeItem("edit_partner_index");
+        } else {
+          partners.push(reader.result);
+        }
+        localStorage.setItem("ngfc_partners", JSON.stringify(partners));
+        markUpdated("partners");
+        loadPartners();
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+  window.deletePartner = i => {
+    let partners = JSON.parse(localStorage.getItem("ngfc_partners")) || [];
+    partners.splice(i,1);
+    localStorage.setItem("ngfc_partners", JSON.stringify(partners));
+    markUpdated("partners");
+    loadPartners();
+  };
+  window.editPartner = i => {
+    localStorage.setItem("edit_partner_index", i);
+    document.getElementById("partner-upload").click();
+  };
+
+  // ====== NEWS ======
+  function loadNews() {
+    const news = JSON.parse(localStorage.getItem("ngfc_news")) || [];
+    const container = document.getElementById("news-preview");
+    container.innerHTML = "";
+    news.forEach((n, i) => {
+      container.innerHTML += `
+        <div class="news-item">
+          <strong>${n.date}:</strong> ${n.text}
+          ${n.image ? `<br><img src="${n.image}" style="max-width:150px;margin-top:5px;">` : ""}
+          <br>
+          <button class="edit-btn" onclick="editNews(${i})">Edit</button>
+          <button class="delete-btn" onclick="deleteNews(${i})">Delete</button>
+        </div>`;
+    });
+  }
+  document.getElementById("add-news").addEventListener("click", () => {
+    const date = document.getElementById("news-date").value;
+    const text = document.getElementById("news-text").value;
+    const file = document.getElementById("news-image").files[0];
+    if (!date || !text) return alert("Enter date and text");
+
+    let news = JSON.parse(localStorage.getItem("ngfc_news")) || [];
+    const editIndex = localStorage.getItem("edit_news_index");
+    const newEntry = { date, text, image: "" };
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        newEntry.image = reader.result;
+        if (editIndex !== null) {
+          news[editIndex] = newEntry;
+          localStorage.removeItem("edit_news_index");
+        } else {
+          news.push(newEntry);
+        }
+        localStorage.setItem("ngfc_news", JSON.stringify(news));
+        markUpdated("news");
+        loadNews();
+      };
+      reader.readAsDataURL(file);
+    } else {
+      if (editIndex !== null) {
+        news[editIndex] = newEntry;
+        localStorage.removeItem("edit_news_index");
+      } else {
+        news.push(newEntry);
+      }
+      localStorage.setItem("ngfc_news", JSON.stringify(news));
+      markUpdated("news");
+      loadNews();
+    }
+  });
+  window.deleteNews = i => {
+    let news = JSON.parse(localStorage.getItem("ngfc_news")) || [];
+    news.splice(i, 1);
+    localStorage.setItem("ngfc_news", JSON.stringify(news));
+    markUpdated("news");
+    loadNews();
+  };
+  window.editNews = i => {
+    let news = JSON.parse(localStorage.getItem("ngfc_news")) || [];
+    const n = news[i];
+    document.getElementById("news-date").value = n.date;
+    document.getElementById("news-text").value = n.text;
+    localStorage.setItem("edit_news_index", i);
+  };
+
+  // ====== CLUBS ======
+  function loadClubs() {
+    const clubs = JSON.parse(localStorage.getItem("ngfc_clubs")) || [];
+    const container = document.getElementById("clubs-preview");
+    container.innerHTML = "";
+    clubs.forEach((c, i) => {
+      container.innerHTML += `
+        <div style="display:inline-block;text-align:center;">
+          <img src="${c.logo}" style="height:40px;"><br>
+          ${c.name}
+          <br>
+          <button class="edit-btn" onclick="editClub(${i})">Edit</button>
+          <button class="delete-btn" onclick="deleteClub(${i})">Delete</button>
+        </div>`;
+    });
+    populateClubList();
+  }
+  document.getElementById("add-club").addEventListener("click", () => {
+    const name = document.getElementById("club-name").value;
+    const file = document.getElementById("club-logo").files[0];
+    if (!name || !file) return alert("Enter club name and logo");
+
+    let clubs = JSON.parse(localStorage.getItem("ngfc_clubs")) || [];
+    const editIndex = localStorage.getItem("edit_club_index");
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const clubData = { name, logo: reader.result };
+      if (editIndex !== null) {
+        clubs[editIndex] = clubData;
+        localStorage.removeItem("edit_club_index");
+      } else {
+        clubs.push(clubData);
+      }
+      localStorage.setItem("ngfc_clubs", JSON.stringify(clubs));
+      loadClubs();
+    };
+    reader.readAsDataURL(file);
+  });
+  window.deleteClub = i => {
+    let clubs = JSON.parse(localStorage.getItem("ngfc_clubs")) || [];
+    clubs.splice(i, 1);
+    localStorage.setItem("ngfc_clubs", JSON.stringify(clubs));
+    loadClubs();
+  };
+  window.editClub = i => {
+    let clubs = JSON.parse(localStorage.getItem("ngfc_clubs")) || [];
+    const c = clubs[i];
+    document.getElementById("club-name").value = c.name;
+    localStorage.setItem("edit_club_index", i);
+  };
+
+  // ====== FIXTURES ======
+  function populateClubList() {
+    const clubs = JSON.parse(localStorage.getItem("ngfc_clubs")) || [];
+    const list = document.getElementById("clubs-list");
+    list.innerHTML = clubs.map(c => `<option value="${c.name}">`).join("");
+  }
+  function getClubLogo(clubName) {
+    const clubs = JSON.parse(localStorage.getItem("ngfc_clubs")) || [];
+    const club = clubs.find(c => c.name.toLowerCase() === clubName.toLowerCase());
+    return club ? club.logo : "";
+  }
+  function loadFixtures() {
+    const fixtures = JSON.parse(localStorage.getItem("ngfc_fixtures")) || [];
+    const container = document.getElementById("fixtures-preview");
+    container.innerHTML = "";
+    fixtures.forEach((f, i) => {
+      container.innerHTML += `
+        <div class="fixture-item">
+          <strong>${f.date}:</strong> <em>${f.tournament}</em><br>
+          ${f.logoA ? `<img src="${f.logoA}" style="height:25px;vertical-align:middle;">` : ""}
+          ${f.teamA} vs
+          ${f.logoB ? `<img src="${f.logoB}" style="height:25px;vertical-align:middle;">` : ""}
+          ${f.teamB}
+          <br><em>Venue:</em> ${f.venue}
+          ${f.score ? `<br><em>Score:</em> ${f.score}` : ""}
+          <br>
+          <button class="edit-btn" onclick="editFixture(${i})">Edit</button>
+          <button class="delete-btn" onclick="deleteFixture(${i})">Delete</button>
+        </div>`;
+    });
+  }
+  document.getElementById("add-fixture").addEventListener("click", () => {
+    const tournament = document.getElementById("fixture-tournament").value;
+    const date = document.getElementById("fixture-date").value;
+    const teamA = document.getElementById("fixture-teamA").value;
+    const teamB = document.getElementById("fixture-teamB").value;
+    const venue = document.getElementById("fixture-venue").value;
+    const score = document.getElementById("fixture-score").value;
+
+    if (!date || !teamA || !teamB || !venue || !tournament) {
+      return alert("Please fill in tournament, date, teams, and venue");
+    }
+
+    let fixtures = JSON.parse(localStorage.getItem("ngfc_fixtures")) || [];
+    const editIndex = localStorage.getItem("edit_fixture_index");
+
+    let fixtureData = {
+      tournament,
+      date,
+      teamA,
+      teamB,
+      venue,
+      score,
+      logoA: getClubLogo(teamA),
+      logoB: getClubLogo(teamB)
+    };
+
+    // manual logo override
+    const logoAFile = document.getElementById("fixture-logoA").files[0];
+    const logoBFile = document.getElementById("fixture-logoB").files[0];
+
+    const saveFixture = () => {
+      if (editIndex !== null) {
+        fixtures[editIndex] = fixtureData;
+        localStorage.removeItem("edit_fixture_index");
+      } else {
+        fixtures.push(fixtureData);
+      }
+      localStorage.setItem("ngfc_fixtures", JSON.stringify(fixtures));
+      markUpdated("fixtures");
+      loadFixtures();
+    };
+
+    if (logoAFile) {
+      const readerA = new File

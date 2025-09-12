@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* keep your existing CSS */
+
     :root {
       --primary-blue: #00308F;
       --secondary-blue: #0078D7;
@@ -18,6 +20,71 @@
       --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
       --transition: all 0.3s ease;
     }
+
+    /* Partners */
+    .partners {
+      background: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      margin-bottom: 40px;
+      box-shadow: var(--card-shadow);
+      text-align: center;
+    }
+    .partners-logos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .partners-logos img {
+      width: 324px;   /* 85.60 mm ≈ 324px */
+      height: 324px;
+      object-fit: contain;
+      cursor: pointer;
+      border-radius: 10px;
+      box-shadow: var(--card-shadow);
+      transition: none; /* remove hover zoom */
+    }
+
+    /* Lightbox for partner logos */
+    #logo-lightbox {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+    }
+    #logo-lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+      box-shadow: 0 0 25px rgba(255,255,255,0.3);
+    }
+
+.hero {
+  background: url('images/football-hero.jpg') no-repeat center center/cover;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  position: relative;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6);
+}
+.hero h1, .hero p {
+  position: relative;
+  z-index: 1;
+}
 
     * {
       box-sizing: border-box;
@@ -233,6 +300,22 @@
       text-transform: uppercase;
     }
 
+.btn-cta {
+  background: var(--accent-yellow);
+  color: var(--primary-blue);
+  padding: 15px 30px;
+  border-radius: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  margin-top: 20px;
+  display: inline-block;
+  transition: 0.3s;
+}
+.btn-cta:hover {
+  background: #ffcc00;
+  transform: scale(1.05);
+}
+
     button:hover {
       transform: translateY(-3px);
       box-shadow: 0 7px 14px rgba(0,0,0,0.2);
@@ -447,6 +530,109 @@
       .section-title {
         font-size: 1.5rem;
       }
+    /* --- only new additions below --- */
+
+    /* Gallery */
+    .gallery {
+      background: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: var(--card-shadow);
+      margin-bottom: 40px;
+    }
+    .gallery h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+    }
+    .gallery-grid img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: var(--card-shadow);
+      transition: 0.3s;
+    }
+    .gallery-grid img:hover {
+      transform: scale(1.05);
+    }
+
+    /* News & Updates */
+    .news {
+      background: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      margin-bottom: 40px;
+      box-shadow: var(--card-shadow);
+    }
+    .news-item {
+      border-bottom: 1px dashed #ddd;
+      padding: 15px 0;
+    }
+    .news-item:last-child {
+      border-bottom: none;
+    }
+
+    /* Partners */
+    .partners {
+      background: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      margin-bottom: 40px;
+      box-shadow: var(--card-shadow);
+      text-align: center;
+    }
+    .partners-logos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .partners-logos img {
+      height: 60px;
+      transition: 0.3s;
+    }
+    .partners-logos img:hover {
+      transform: scale(1.1);
+    }
+
+    /* Fixtures */
+    .fixtures {
+      background: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      margin-bottom: 40px;
+      box-shadow: var(--card-shadow);
+    }
+    .fixture-item {
+      border-bottom: 1px dashed #ddd;
+      padding: 15px 0;
+    }
+    .fixture-item:last-child {
+      border-bottom: none;
+    }
+
+    /* Download button */
+    .download-btn {
+      margin-top: 20px;
+      display: inline-block;
+      background: var(--secondary-blue);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .download-btn:hover {
+      background: var(--primary-blue);
+    }
+    .last-updated {
+      font-style: italic;
+      color: #555;
+      margin-top: 8px;
+      font-size: 14px;
     }
   </style>
 </head>
@@ -462,17 +648,21 @@
     </div>
     <h1>NIGERIA GRASSROOTS FOOTBALL COMPETITIONS</h1>
     <p class="subtitle">The official sports governing body for Idemili North and South regions</p>
+    <a href="#registration" class="btn-cta">Register Your Club</a>
   </header>
 
   <!-- Navigation -->
   <nav>
     <ul>
-      <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
       <li><a href="#registration"><i class="fas fa-clipboard-list"></i> Registration</a></li>
       <li><a href="#about"><i class="fas fa-info-circle"></i> About Us</a></li>
       <li><a href="#competitions"><i class="fas fa-trophy"></i> Competitions</a></li>
       <li><a href="#clubs"><i class="fas fa-users"></i> Clubs & Academies</a></li>
       <li><a href="#registered"><i class="fas fa-futbol"></i> Registered Clubs</a></li>
+      <li><a href="#gallery"><i class="fas fa-images"></i> Gallery</a></li>
+      <li><a href="#news"><i class="fas fa-newspaper"></i> News</a></li>
+      <li><a href="#partners"><i class="fas fa-handshake"></i> Partners</a></li>
+      <li><a href="#fixtures"><i class="fas fa-calendar-alt"></i> Fixtures</a></li>
       <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
     </ul>
   </nav>
@@ -482,65 +672,63 @@
     <!-- Registration Form -->
     <section id="registration" class="form-section fade-in">
       <h2 class="form-title">Club Registration Form</h2>
-      <form id="club-registration" action="/" method="POST">
+      <form id="club-registration" enctype="multipart/form-data">
         <div class="form-grid">
+          <!-- Existing inputs -->
           <div class="form-group">
             <label for="club-name"><i class="fas fa-signature"></i> Club Name</label>
-            <input type="text" id="club-name" name="clubName" placeholder="Enter your club name" required>
+            <input type="text" id="club-name" required>
           </div>
-
           <div class="form-group">
-            <label for="club-base"><i class="fas fa-map-marker-alt"></i> Club Base/Location</label>
-            <input type="text" id="club-base" name="clubBase" placeholder="Where is your club based?" required>
+            <label for="club-base"><i class="fas fa-map-marker-alt"></i> Club Base</label>
+            <input type="text" id="club-base" required>
           </div>
-
           <div class="form-group">
-            <label for="club-type"><i class="fas fa-question-circle"></i> Academy or Football Club?</label>
-            <select id="club-type" name="clubType" required>
-              <option value="">Select type</option>
+            <label for="club-type"><i class="fas fa-question-circle"></i> Type</label>
+            <select id="club-type" required>
               <option value="academy">Football Academy</option>
               <option value="club">Football Club</option>
             </select>
           </div>
-
           <div class="form-group">
-            <label for="club-director"><i class="fas fa-user-tie"></i> Club Director/Manager</label>
-            <input type="text" id="club-director" name="clubDirector" placeholder="Full name of director" required>
+            <label for="club-director"><i class="fas fa-user-tie"></i> Director</label>
+            <input type="text" id="club-director" required>
           </div>
-
           <div class="form-group">
-            <label for="club-category"><i class="fas fa-layer-group"></i> Club Category</label>
-            <select id="club-category" name="clubCategory" required>
-              <option value="">Select category</option>
+            <label for="club-category"><i class="fas fa-layer-group"></i> Category</label>
+            <select id="club-category" required>
               <option value="u13">U-13</option>
               <option value="u15">U-15</option>
               <option value="u17">U-17</option>
               <option value="senior">Senior</option>
               <option value="female">Female Team</option>
-              <option value="mixed">Mixed Categories</option>
+              <option value="mixed">Mixed</option>
             </select>
           </div>
-
           <div class="form-group">
-            <label for="contact-email"><i class="fas fa-envelope"></i> Contact Email</label>
-            <input type="email" id="contact-email" name="contactEmail" placeholder="Email address" required>
+            <label for="contact-email"><i class="fas fa-envelope"></i> Email</label>
+            <input type="email" id="contact-email" required>
           </div>
-
           <div class="form-group">
-            <label for="contact-phone"><i class="fas fa-phone"></i> Contact Phone</label>
-            <input type="tel" id="contact-phone" name="contactPhone" placeholder="Phone number" required>
+            <label for="contact-phone"><i class="fas fa-phone"></i> Phone</label>
+            <input type="tel" id="contact-phone" required>
+          </div>
+          <!-- Logo Upload -->
+          <div class="form-group">
+            <label for="club-logo"><i class="fas fa-image"></i> Club Logo</label>
+            <input type="file" id="club-logo" accept="image/*">
           </div>
         </div>
-
         <button type="submit"><i class="fas fa-paper-plane"></i> Submit Registration</button>
       </form>
-
       <div id="success-message" class="success-message">
-        <i class="fas fa-check-circle"></i> Thank you for registering your club! It will now appear in the Registered Clubs section.
+        <i class="fas fa-check-circle"></i> Thank you for registering!
       </div>
+      <button id="download-csv" class="download-btn"><i class="fas fa-download"></i> Download Clubs List</button>
     </section>
 
-    <!-- About Us Section -->
+    <!-- About, Competitions, Registered Clubs, Clubs Sections (keep your existing ones) -->
+<!-- About Us Section -->
     <section id="about" class="info-section fade-in">
       <h2 class="section-title"><i class="fas fa-info-circle"></i> About Us</h2>
       <p>
@@ -628,8 +816,35 @@
           <h3><i class="fas fa-futbol"></i> Golden Stars Queens FC Ichi</h3>
           <p>Category: U-17 & Senior Female</p>
         </div>
-      </div>
-    </section>
+
+    <!-- Gallery -->
+<section id="gallery" class="gallery fade-in">
+  <h2><i class="fas fa-images"></i> Gallery</h2>
+  <div id="gallery-grid" class="gallery-grid"></div>
+</section>
+
+<!-- News & Updates -->
+<section id="news" class="news fade-in">
+  <h2><i class="fas fa-newspaper"></i> News & Updates</h2>
+  <div id="news-container"></div>
+</section>
+
+ <!-- Partners & Sponsors -->
+  <section id="partners" class="partners fade-in">
+    <h2><i class="fas fa-handshake"></i> Our Partners</h2>
+    <div id="partners-logos" class="partners-logos"></div>
+  </section>
+
+  <!-- Lightbox for Partner Logos -->
+  <div id="logo-lightbox" onclick="closeLogoLightbox()">
+    <img id="logo-lightbox-img" src="" alt="Partner Logo">
+  </div>
+
+<!-- Fixtures -->
+<section id="fixtures" class="fixtures fade-in">
+  <h2><i class="fas fa-calendar-alt"></i> Upcoming Fixtures & Results</h2>
+  <div id="fixtures-container"></div>
+</section>
   </div>
 
   <!-- Footer -->
@@ -652,133 +867,253 @@
     <div class="copyright">
       <p>&copy; 2023 Nigeria Grassroots Football Competitions - Idemili Region. All rights reserved.</p>
     </div>
+    <!-- keep existing contact info -->
   </footer>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Load any previously saved clubs from localStorage
+document.addEventListener('DOMContentLoaded', () => {
+  // ===== Loaders =====
+  function loadRegisteredClubs() {
+    const clubs = JSON.parse(localStorage.getItem('ngfc_clubs')) || [];
+    const container = document.getElementById('new-clubs-container');
+    container.innerHTML = '';
+    clubs.slice(-6).reverse().forEach(club => addClubToDisplay(club));
+  }
+
+  function addClubToDisplay(club) {
+    const container = document.getElementById('new-clubs-container');
+    const card = document.createElement('div');
+    card.className = 'club-card fade-in';
+    card.innerHTML = `
+      <h3><i class="fas fa-futbol"></i> ${club.name}</h3>
+      ${club.logo ? `<img src="${club.logo}" alt="Logo" style="max-width:80px;display:block;margin:10px 0;">` : ""}
+      <p><strong>Location:</strong> ${club.base}</p>
+      <p><strong>Type:</strong> ${club.type}</p>
+      <p><strong>Category:</strong> ${club.category}</p>
+      <p><strong>Director:</strong> ${club.director}</p>
+    `;
+    container.prepend(card);
+  }
+
+  function loadGallery() {
+    const gallery = JSON.parse(localStorage.getItem("ngfc_gallery")) || [];
+    const container = document.getElementById("gallery-grid");
+    container.innerHTML = gallery.length === 0
+      ? "<p>No gallery images yet.</p>"
+      : gallery.map(img => `<img src="${img}" alt="gallery">`).join('');
+  }
+
+  function loadNews() {
+    const news = JSON.parse(localStorage.getItem("ngfc_news")) || [];
+    const container = document.getElementById("news-container");
+    container.innerHTML = news.length === 0
+      ? "<p>No news updates available.</p>"
+      : news.map(n => `
+        <div class="news-item">
+          <strong>${n.date}:</strong> ${n.text}
+          ${n.image ? `<br><img src="${n.image}" style="max-width:150px;">` : ""}
+        </div>
+      `).join('');
+  }
+
+  function loadPartners() {
+    const partners = JSON.parse(localStorage.getItem("ngfc_partners")) || [];
+    const container = document.getElementById("partners-logos");
+    container.innerHTML = partners.length === 0
+      ? "<p>No partners listed yet.</p>"
+      : partners.map(img => `<img src="${img}" alt="Partner Logo">`).join('');
+  }
+
+ // ====== FIXTURES ======
+function loadFixtures() {
+  const fixtures = JSON.parse(localStorage.getItem("ngfc_fixtures")) || [];
+  const container = document.getElementById("fixtures-container");
+  container.innerHTML = "";
+  if (fixtures.length === 0) {
+    container.innerHTML = "<p>No fixtures available.</p>";
+  } else {
+    fixtures.forEach(f => {
+      container.innerHTML += `
+        <div class="fixture-item">
+          <strong>${f.date}:</strong>
+          ${f.logoA ? `<img src="${f.logoA}" style="height:25px;vertical-align:middle;">` : ""}
+          ${f.teamA} vs
+          ${f.logoB ? `<img src="${f.logoB}" style="height:25px;vertical-align:middle;">` : ""}
+          ${f.teamB}
+          <br><em>Venue:</em> ${f.venue}
+          ${f.score ? `<br><em>Score:</em> ${f.score}` : ""}
+        </div>`;
+    });
+  }
+}
+
+
+
+  // === INITIAL LOAD ===
+  loadRegisteredClubs();
+  loadGallery();
+  loadNews();
+  loadPartners();
+  loadFixtures();
+
+  // === Auto-refresh on storage change ===
+  window.addEventListener("storage", (event) => {
+    if (["ngfc_gallery","ngfc_news","ngfc_partners","ngfc_fixtures","ngfc_clubs"].includes(event.key)) {
+      loadGallery();
+      loadNews();
+      loadPartners();
+      loadFixtures();
       loadRegisteredClubs();
+    }
+  });
+});
 
-      // Form submission handling
-      document.getElementById('club-registration').addEventListener('submit', function(e) {
-        e.preventDefault();
+document.addEventListener('DOMContentLoaded', () => {
+  // ===== Helpers =====
+  function timeAgo(timestamp) {
+    if (!timestamp) return "never";
+    const now = Date.now();
+    const diff = Math.floor((now - timestamp) / 1000);
+    if (diff < 60) return "just now";
+    if (diff < 3600) return `${Math.floor(diff/60)} min ago`;
+    if (diff < 86400) return `${Math.floor(diff/3600)} hr ago`;
+    return `${Math.floor(diff/86400)} day(s) ago`;
+  }
 
-        // Get form values
-        const clubName = document.getElementById('club-name').value;
-        const clubBase = document.getElementById('club-base').value;
-        const clubType = document.getElementById('club-type').value;
-        const clubDirector = document.getElementById('club-director').value;
-        const clubCategory = document.getElementById('club-category').value;
-        const contactEmail = document.getElementById('contact-email').value;
-        const contactPhone = document.getElementById('contact-phone').value;
+  function updateTimestamp(sectionId, key) {
+    let ts = document.querySelector(`#${sectionId} .last-updated`);
+    if (!ts) {
+      ts = document.createElement("p");
+      ts.className = "last-updated";
+      document.getElementById(sectionId).appendChild(ts);
+    }
+    const last = JSON.parse(localStorage.getItem("ngfc_lastUpdated")) || {};
+    ts.textContent = `Last updated: ${timeAgo(last[key])}`;
+  }
 
-        // Create club object
-        const club = {
-          name: clubName,
-          base: clubBase,
-          type: clubType,
-          director: clubDirector,
-          category: clubCategory,
-          email: contactEmail,
-          phone: contactPhone,
-          timestamp: new Date().toISOString()
-        };
+  // ===== Loaders =====
+  function loadRegisteredClubs() {
+    const clubs = JSON.parse(localStorage.getItem('ngfc_clubs')) || [];
+    const container = document.getElementById('new-clubs-container');
+    container.innerHTML = '';
+    clubs.slice(-6).reverse().forEach(club => addClubToDisplay(club));
+    updateTimestamp("registered","clubs");
+  }
 
-        // Save club to localStorage
-        saveClub(club);
+  function addClubToDisplay(club) {
+    const container = document.getElementById('new-clubs-container');
+    const card = document.createElement('div');
+    card.className = 'club-card fade-in';
+    card.innerHTML = `
+      <h3><i class="fas fa-futbol"></i> ${club.name}</h3>
+      ${club.logo ? `<img src="${club.logo}" alt="Logo" style="max-width:80px;display:block;margin:10px 0;">` : ""}
+      <p><strong>Location:</strong> ${club.base}</p>
+      <p><strong>Type:</strong> ${club.type}</p>
+      <p><strong>Category:</strong> ${club.category}</p>
+      <p><strong>Director:</strong> ${club.director}</p>
+    `;
+    container.prepend(card);
+  }
 
-        // Add club to the display
-        addClubToDisplay(club);
+  function loadGallery() {
+    const gallery = JSON.parse(localStorage.getItem("ngfc_gallery")) || [];
+    const container = document.getElementById("gallery-grid");
+    container.innerHTML = gallery.length === 0
+      ? "<p>No gallery images yet.</p>"
+      : gallery.map(img => `<img src="${img}" alt="gallery">`).join('');
+    updateTimestamp("gallery","gallery");
+  }
 
-        // Show success message
-        const successMessage = document.getElementById('success-message');
-        successMessage.style.display = 'block';
+  function loadNews() {
+    const news = JSON.parse(localStorage.getItem("ngfc_news")) || [];
+    const container = document.getElementById("news-container");
+    container.innerHTML = news.length === 0
+      ? "<p>No news updates available.</p>"
+      : news.map(n => `
+        <div class="news-item">
+          <strong>${n.date}:</strong> ${n.text}
+          ${n.image ? `<br><img src="${n.image}" style="max-width:150px;">` : ""}
+        </div>
+      `).join('');
+    updateTimestamp("news","news");
+  }
 
-        // Reset form
-        setTimeout(function() {
-          document.getElementById('club-registration').reset();
-          successMessage.style.display = 'none';
-        }, 5000);
-      });
+  function loadPartners() {
+    const partners = JSON.parse(localStorage.getItem("ngfc_partners")) || [];
+    const container = document.getElementById("partners-logos");
+    container.innerHTML = partners.length === 0
+      ? "<p>No partners listed yet.</p>"
+      : partners.map(img => `<img src="${img}" alt="Partner Logo">`).join('');
+    updateTimestamp("partners","partners");
+  }
 
-      // Function to save club to localStorage
-      function saveClub(club) {
-        let clubs = JSON.parse(localStorage.getItem('ngfc_clubs')) || [];
-        clubs.push(club);
-        localStorage.setItem('ngfc_clubs', JSON.stringify(clubs));
-      }
+  function loadFixtures() {
+    const fixtures = JSON.parse(localStorage.getItem("ngfc_fixtures")) || [];
+    const container = document.getElementById("fixtures-container");
+    container.innerHTML = fixtures.length === 0
+      ? "<p>No fixtures available.</p>"
+      : fixtures.map(f => `
+        <div class="fixture-item">
+          <strong>${f.date}:</strong> <em>${f.tournament || ""}</em><br>
+          ${f.logoA ? `<img src="${f.logoA}" style="height:25px;vertical-align:middle;">` : ""}
+          ${f.teamA} vs
+          ${f.logoB ? `<img src="${f.logoB}" style="height:25px;vertical-align:middle;">` : ""}
+          ${f.teamB}
+          <br><em>Venue:</em> ${f.venue}
+          ${f.score ? `<br><em>Score:</em> ${f.score}` : ""}
+        </div>
+      `).join('');
+    updateTimestamp("fixtures","fixtures");
+  }
 
-      // Function to load registered clubs from localStorage
-      function loadRegisteredClubs() {
-        const clubs = JSON.parse(localStorage.getItem('ngfc_clubs')) || [];
-        const container = document.getElementById('new-clubs-container');
+  // === INITIAL LOAD ===
+  loadRegisteredClubs();
+  loadGallery();
+  loadNews();
+  loadPartners();
+  loadFixtures();
 
-        // Clear the placeholder
-        container.innerHTML = '';
+  // === Auto-refresh when Admin updates ===
+  window.addEventListener("storage", (event) => {
+    if (["ngfc_gallery","ngfc_news","ngfc_partners","ngfc_fixtures","ngfc_clubs"].includes(event.key)) {
+      loadGallery();
+      loadNews();
+      loadPartners();
+      loadFixtures();
+      loadRegisteredClubs();
+    }
+  });
 
-        if (clubs.length === 0) {
-          container.innerHTML = `
-            <div class="club-card">
-              <h3><i class="fas fa-futbol"></i> Your Club Name</h3>
-              <p>Submit the form to see your club listed here!</p>
-            </div>
-          `;
-          return;
-        }
+  // Refresh timestamps every 60s
+  setInterval(() => {
+    updateTimestamp("gallery","gallery");
+    updateTimestamp("news","news");
+    updateTimestamp("partners","partners");
+    updateTimestamp("fixtures","fixtures");
+    updateTimestamp("registered","clubs");
+  }, 60000);
+ // ===== Lightbox Functions =====
+    function openLogoLightbox(img) {
+      document.getElementById("logo-lightbox-img").src = img.src;
+      document.getElementById("logo-lightbox").style.display = "flex";
+    }
+    function closeLogoLightbox() {
+      document.getElementById("logo-lightbox").style.display = "none";
+    }
 
-        // Display the clubs (show latest 6)
-        const recentClubs = clubs.slice(-6).reverse();
-        recentClubs.forEach(club => {
-          addClubToDisplay(club, container);
-        });
-      }
+    // ===== Load Partners =====
+    function loadPartners() {
+      const partners = JSON.parse(localStorage.getItem("ngfc_partners")) || [];
+      const container = document.getElementById("partners-logos");
+      container.innerHTML = partners.length === 0
+        ? "<p>No partners listed yet.</p>"
+        : partners.map(img => `<img src="${img}" alt="Partner Logo" onclick="openLogoLightbox(this)">`).join('');
+    }
 
-      // Function to add a club to the display
-      function addClubToDisplay(club, container = null) {
-        if (!container) {
-          container = document.getElementById('new-clubs-container');
-        }
-
-        const clubCard = document.createElement('div');
-        clubCard.className = 'club-card fade-in';
-        clubCard.innerHTML = `
-          <h3><i class="fas fa-futbol"></i> ${club.name}</h3>
-          <p><strong>Location:</strong> ${club.base}</p>
-          <p><strong>Type:</strong> ${club.type === 'academy' ? 'Football Academy' : 'Football Club'}</p>
-          <p><strong>Category:</strong> ${getCategoryDisplayName(club.category)}</p>
-          <p><strong>Director:</strong> ${club.director}</p>
-        `;
-
-        container.prepend(clubCard);
-      }
-
-      // Helper function to get display name for category
-      function getCategoryDisplayName(category) {
-        const categories = {
-          'u13': 'U-13',
-          'u15': 'U-15',
-          'u17': 'U-17',
-          'senior': 'Senior',
-          'female': 'Female Team',
-          'mixed': 'Mixed Categories'
-        };
-
-        return categories[category] || category;
-      }
-
-      // Smooth scrolling for navigation links
-      document.querySelectorAll('nav a').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-          e.preventDefault();
-
-          const targetId = this.getAttribute('href');
-          const targetElement = document.querySelector(targetId);
-
-          window.scrollTo({
-            top: targetElement.offsetTop - 80,
-            behavior: 'smooth'
-          });
-        });
+    document.addEventListener("DOMContentLoaded", () => {
+      loadPartners();
+      window.addEventListener("storage", (event) => {
+        if (event.key === "ngfc_partners") loadPartners();
       });
     });
   </script>
